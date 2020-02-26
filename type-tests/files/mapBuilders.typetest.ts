@@ -20,6 +20,7 @@ function expectType<T>(t: T) {
       expectType<{ type: 'increment'; payload: string }>(action)
       // typings:expect-error
       expectType<{ type: 'decrement'; payload: number }>(action)
+      return state
     })
 
     builder.addCase('increment', (state, action) => {
@@ -29,6 +30,7 @@ function expectType<T>(t: T) {
       expectType<{ type: 'decrement' }>(action)
       // typings:expect-error - this cannot be inferred and has to be manually specified
       expectType<{ type: 'increment'; payload: number }>(action)
+      return state
     })
 
     builder.addCase(

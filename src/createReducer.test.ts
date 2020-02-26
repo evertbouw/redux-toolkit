@@ -25,42 +25,18 @@ type ToggleTodoReducer = CaseReducer<
 >
 
 describe('createReducer', () => {
-  describe('given impure reducers with immer', () => {
-    const addTodo: AddTodoReducer = (state, action) => {
-      const { newTodo } = action.payload
-
-      // Can safely call state.push() here
-      state.push({ ...newTodo, completed: false })
-    }
-
-    const toggleTodo: ToggleTodoReducer = (state, action) => {
-      const { index } = action.payload
-
-      const todo = state[index]
-      // Can directly modify the todo object
-      todo.completed = !todo.completed
-    }
-
-    const todosReducer = createReducer([] as TodoState, {
-      ADD_TODO: addTodo,
-      TOGGLE_TODO: toggleTodo
-    })
-
-    behavesLikeReducer(todosReducer)
-  })
-
   describe('given pure reducers with immutable updates', () => {
     const addTodo: AddTodoReducer = (state, action) => {
       const { newTodo } = action.payload
 
-      // Updates the state immutably without relying on immer
+      // Updates the state immutably
       return state.concat({ ...newTodo, completed: false })
     }
 
     const toggleTodo: ToggleTodoReducer = (state, action) => {
       const { index } = action.payload
 
-      // Updates the todo object immutably withot relying on immer
+      // Updates the todo object immutably
       return state.map((todo, i) => {
         if (i !== index) return todo
         return { ...todo, completed: !todo.completed }

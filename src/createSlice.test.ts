@@ -65,26 +65,6 @@ describe('createSlice', () => {
     })
   })
 
-  describe('when mutating state object', () => {
-    const initialState = { user: '' }
-
-    const { actions, reducer } = createSlice({
-      reducers: {
-        setUserName: (state, action) => {
-          state.user = action.payload
-        }
-      },
-      initialState,
-      name: 'user'
-    })
-
-    it('should set the username', () => {
-      expect(reducer(initialState, actions.setUserName('eric'))).toEqual({
-        user: 'eric'
-      })
-    })
-  })
-
   describe('when passing extra reducers', () => {
     const addMore = createAction<{ amount: number }>('ADD_MORE')
 

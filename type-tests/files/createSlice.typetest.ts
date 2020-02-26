@@ -178,7 +178,10 @@ const value = actionCreators.anyKey
     reducers: {
       incrementByStrLen: {
         reducer: (state, action: PayloadAction<number>) => {
-          state.counter += action.payload
+          return {
+            ...state,
+            counter: state.counter + action.payload
+          }
         },
         prepare: (payload: string) => ({
           payload: payload.length
@@ -186,7 +189,10 @@ const value = actionCreators.anyKey
       },
       concatMetaStrLen: {
         reducer: (state, action: PayloadAction<string>) => {
-          state.concat += action.payload
+          return {
+            ...state,
+            concat: state.concat + action.payload
+          }
         },
         prepare: (payload: string) => ({
           payload,
@@ -218,7 +224,9 @@ const value = actionCreators.anyKey
     reducers: {
       // case: meta and error not used in reducer
       testDefaultMetaAndError: {
-        reducer(_, action: PayloadAction<number, string>) {},
+        reducer(state, action: PayloadAction<number, string>) {
+          return state
+        },
         prepare: (payload: number) => ({
           payload,
           meta: 'meta' as 'meta',
@@ -227,7 +235,12 @@ const value = actionCreators.anyKey
       },
       // case: meta and error marked as "unknown" in reducer
       testUnknownMetaAndError: {
-        reducer(_, action: PayloadAction<number, string, unknown, unknown>) {},
+        reducer(
+          state,
+          action: PayloadAction<number, string, unknown, unknown>
+        ) {
+          return state
+        },
         prepare: (payload: number) => ({
           payload,
           meta: 'meta' as 'meta',
@@ -236,7 +249,9 @@ const value = actionCreators.anyKey
       },
       // case: meta and error are typed in the reducer as returned by prepare
       testMetaAndError: {
-        reducer(_, action: PayloadAction<number, string, 'meta', 'error'>) {},
+        reducer(state, action: PayloadAction<number, string, 'meta', 'error'>) {
+          return state
+        },
         prepare: (payload: number) => ({
           payload,
           meta: 'meta' as 'meta',
@@ -245,7 +260,9 @@ const value = actionCreators.anyKey
       },
       // case: meta is typed differently in the reducer than returned from prepare
       testErroneousMeta: {
-        reducer(_, action: PayloadAction<number, string, 'meta', 'error'>) {},
+        reducer(state, action: PayloadAction<number, string, 'meta', 'error'>) {
+          return state
+        },
         // typings:expect-error
         prepare: (payload: number) => ({
           payload,
@@ -255,7 +272,9 @@ const value = actionCreators.anyKey
       },
       // case: error is typed differently in the reducer than returned from prepare
       testErroneousError: {
-        reducer(_, action: PayloadAction<number, string, 'meta', 'error'>) {},
+        reducer(state, action: PayloadAction<number, string, 'meta', 'error'>) {
+          return state
+        },
         // typings:expect-error
         prepare: (payload: number) => ({
           payload,
@@ -329,7 +348,10 @@ const value = actionCreators.anyKey
     reducers: {
       increment: {
         reducer(state, action: PayloadAction<string>) {
-          state.counter += action.payload.length
+          return {
+            ...state,
+            counter: state.counter + action.payload.length
+          }
         },
         prepare(x: string) {
           return {
@@ -355,7 +377,10 @@ const value = actionCreators.anyKey
     initialState,
     reducers: {
       setName: (state, action) => {
-        state.name = action.payload
+        return {
+          ...state,
+          name: action.payload
+        }
       }
     }
   })
@@ -378,7 +403,10 @@ const value = actionCreators.anyKey
     initialState: { name: 'test' },
     reducers: {
       setName: (state, action: PayloadAction<string>) => {
-        state.name = action.payload
+        return {
+          ...state,
+          name: action.payload
+        }
       }
     }
   })
@@ -451,8 +479,11 @@ const value = actionCreators.anyKey
         // typings:expect-error
         expectType<GenericState<number>>(state)
 
-        state.status = 'finished'
-        state.data = 'hocus pocus'
+        return {
+          ...state,
+          status: 'finished',
+          data: 'hocus pocus'
+        }
       }
     }
   })
