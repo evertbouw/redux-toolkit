@@ -1,7 +1,7 @@
 {
-  "name": "@reduxjs/toolkit",
-  "version": "1.2.5",
-  "description": "The official, opinionated, batteries-included toolset for efficient Redux development",
+  "name": "@evertbouw/redux-toolkit",
+  "version": "1.2.6",
+  "description": "Redux toolkit but without immer",
   "repository": "https://github.com/reduxjs/redux-toolkit",
   "keywords": [
     "redux",
@@ -9,9 +9,7 @@
     "starter",
     "toolkit",
     "reducer",
-    "slice",
-    "immer",
-    "immutable"
+    "slice"
   ],
   "publishConfig": {
     "access": "public"
@@ -54,7 +52,6 @@
     "src"
   ],
   "dependencies": {
-    "immer": "^4.0.1",
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.8",
     "redux-immutable-state-invariant": "^2.1.0",
